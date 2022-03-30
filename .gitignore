@@ -8,6 +8,6 @@
 !*.gitignore
 !*.jpg
 !*.ris
-!*.html
+#!*.html
 !*.fasta
 *!__init__.py

@@ -10,3 +10,4 @@
 !*.ris
 !*.html
 !*.fasta
+*!__init__.py

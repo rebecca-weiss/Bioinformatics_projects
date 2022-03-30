@@ -1,5 +1,5 @@
 ## 
-# BINF6309 Module 10: GWAS
+# GWAS
 
 ## Author: Rebecca Weiss
 

@@ -1,0 +1,26 @@
+---
+author: Rebecca Weiss
+output:
+  html_document:
+    toc: true
+    toc_depth: 4
+    toc_float: true
+    dev: 'svg'
+  md_document:
+    variant: gfm
+bibliography: bibliography.ris
+nocite: '@*'
+---
+
+## Overview
+
+The two main steps in performing differential expression analysis are to
+estimate the relative abundance of transcripts, and to apply statistical models
+to test for differential expression between treatment groups. Estimating
+relative abundance is basically determining how many NGS reads match a given
+gene within a genome. In this module you'll use Salmon [@Patro] to estimate
+relative abundance, tximport [@Soneson] to import the Salmon abundance
+estimates, and DESeq2 [@Love] to perform statistical tests to identify
+differentially expressed genes. 
+
+## References

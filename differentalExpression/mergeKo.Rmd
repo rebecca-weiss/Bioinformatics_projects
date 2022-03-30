@@ -1,0 +1,9 @@
+---
+author: Rebecca Weiss
+output:
+  md_document:
+    variant: gfm
+---
+
+```{R, code=readLines("mergeKo.R"), echo=TRUE, eval=TRUE}
+```

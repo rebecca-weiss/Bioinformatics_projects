@@ -1,0 +1,32 @@
+---
+author: Rebecca Weiss
+output:
+  html_document:
+    toc: true
+    toc_depth: 4
+    toc_float: true
+    dev: 'svg'
+  md_document:
+    variant: gfm
+bibliography: bibliography.ris
+nocite: '@*'
+---
+## Module 4: Differential Expression Analysis 
+
+## Methods
+Differential expression analysis is done in two steps: estimate the relative abundance of transcripts, and apply statistical models to identify differental expression.
+The relative abundance of transcripts are estimated by evaluating the number of matches there are between NGS reads and a genome. To do this, Salmon [Patro et al], DESeq2 [Love et al], and tximport [Soneson et al] packages were used.
+
+The first step is to estimate relative abundance is to use Salmon [Patro et al] on RNA-seq reads to calculate transcript abundance overall. A de-novo transcriptome was used to create an index with kmer length of 25, and then Salmon was used to align all Aip samples to AipIndex. 
+Before moving on to the next step, we created a table in R that mapped annotated transcripts to genes.  Once this was done, tximport [Soneson et al] was used to import Salmon's output of abundance estimates. Lastly, salmon alignments were then imported into DESeq2 [Love et al], 
+which was used to run statistics to identify the whether there were differentially expressed genes. Results are below. 
+
+## Results 
+
+```{R}
+library(knitr)
+deAnnotated <- read.csv("deAnnotated.csv", header=T)
+kable(deAnnotated)  
+```
+
+## References

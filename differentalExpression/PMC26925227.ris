@@ -1,0 +1,25 @@
+TY  - JOUR
+TI  - Differential analyses for RNA-seq: transcript-level estimates improve gene-level inferences
+AU  - Soneson, Charlotte
+AU  - Love, Michael I.
+AU  - Robinson, Mark D.
+T2  - F1000Research
+AB  - High-throughput sequencing of cDNA (RNA-seq) is used extensively to characterize the transcriptome of cells. Many transcriptomic studies aim at comparing either abundance levels or the transcriptome composition between given conditions, and as a first step, the sequencing reads must be used as the basis for abundance quantification of transcriptomic features of interest, such as genes or transcripts. Various quantification approaches have been proposed, ranging from simple counting of reads that overlap given genomic regions to more complex estimation of underlying transcript abundances. In this paper, we show that gene-level abundance estimates and statistical inference offer advantages over transcript-level analyses, in terms of performance and interpretability. We also illustrate that the presence of differential isoform usage can lead to inflated false discovery rates in differential gene expression analyses on simple count matrices but that this can be addressed by incorporating offsets derived from transcript-level abundance estimates. We also show that the problem is relatively minor in several real data sets. Finally, we provide an R package ( tximport) to help users integrate transcript-level abundance estimates from common quantification pipelines into count-based statistical inference engines.
+DA  - 2015///
+PY  - 2015
+DO  - 10.12688/f1000research.7563.2
+DP  - PubMed
+VL  - 4
+SP  - 1521
+J2  - F1000Res
+LA  - eng
+SN  - 2046-1402
+ST  - Differential analyses for RNA-seq
+L1  - https://f1000research.com/articles/4-1521/v2/pdf
+L2  - http://www.ncbi.nlm.nih.gov/pubmed/26925227
+KW  - gene expression
+KW  - quantification
+KW  - RNA-seq
+KW  - transcriptomics
+ER  - 
+

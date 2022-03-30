@@ -1,0 +1,33 @@
+TY  - JOUR
+DB  - PubMed
+AU  - Patro, Rob
+AU  - Duggal, Geet
+AU  - Love, Michael I
+AU  - Irizarry, Rafael A
+AU  - Kingsford, Carl
+T1  - Salmon provides fast and bias-aware quantification of transcript expression
+LA  - eng
+SN  - 1548-7105
+SN  - 1548-7091
+Y1  - 2017/04/
+ET  - 2017/03/06
+AB  - We introduce Salmon, a lightweight method for quantifying transcript abundance from RNA-seq reads. Salmon combines a new dual-phase parallel inference algorithm and feature-rich bias models with an ultra-fast read mapping procedure. It is the first transcriptome-wide quantifier to correct for fragment GC-content bias, which, as we demonstrate here, substantially improves the accuracy of abundance estimates and the sensitivity of subsequent differential expression analysis.
+SP  - 417
+EP  - 419
+VL  - 14
+IS  - 4
+AN  - 28263959
+UR  - https://pubmed.ncbi.nlm.nih.gov/28263959
+DO  - 10.1038/nmeth.4197
+L2  - https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5600148/
+U1  - 28263959[pmid]
+U2  - PMC5600148[pmcid]
+U4  - nmeth.4197[PII]
+J2  - Nat Methods
+JF  - Nature methods
+KW  - *Algorithms
+KW  - Base Composition
+KW  - Bayes Theorem
+KW  - Gene Expression Profiling/methods/statistics & numerical data
+KW  - Sequence Analysis, RNA/*methods/statistics & numerical data
+ER  - 

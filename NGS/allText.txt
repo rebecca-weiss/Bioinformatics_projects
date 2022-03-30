@@ -1,0 +1,63 @@
+#!/usr/bin/env bash
+# getNGS.sh
+
+# Retrieve the Rhodobacter spheroides NGS reads.
+fastq-dump --split-files SRR522244 1>getNGS.log 2>getNGS.err#!/usr/bin/env bash
+# runQuast.sh
+
+#make output dir
+outPath="quast_output/"
+mkdir -p $outPath
+
+#reference genome file
+refgen=/data/METHODS/Fall/Module10/GCF_000012905.2_ASM1290v2_genomic.fna
+
+##commands to run quast
+quast.py \
+--threads 4 \
+--gene-finding \
+-R /data/METHODS/Fall/Module10/GCF_000012905.2_ASM1290v2_genomic.fna \
+-s Rhodo/scaffolds.fasta \
+-o $outPath 
+
+
+
+
+
+#!/usr/bin/env bash
+# runSpades.sh
+
+#absolute path for spades on Defiance
+spades=/usr/local/programs/SPAdes-3.14.1-Linux/bin/spades.py
+outPath="Rhodo/"
+
+#make Rhodo dir
+mkdir -p $outPath
+
+#Commands for running spades with 4 threads, output Rhodo directory, to assemble the Rhodobacter genome using just the quality-trimmed reads in Paired.  
+$spades \
+--threads 4 \
+--pe1-1 Paired/SRR522244_1.fastq --pe1-2 Paired/SRR522244_2.fastq \
+-o $outPath \
+
+1>runSpades.log 2>runSpades.err &#!/usr/bin/env bash
+# trim.sh
+
+# Create the output directories
+mkdir -p Paired/
+mkdir -p Unpaired/
+
+function trim {
+    echo nice -n19 java -jar /usr/local/programs/Trimmomatic-0.36/trimmomatic-0.36.jar PE \
+    -threads 1 -phred33 \
+    SRR522244_1.fastq \
+    SRR522244_2.fastq \
+    Paired/SRR522244_1.fastq \
+    Unpaired/SRR522244_1.fastq \
+    Paired/SRR522244_2.fastq \
+    Unpaired/SRR522244_2.fastq \
+    HEADCROP:0 \
+    ILLUMINACLIP:/usr/local/programs/Trimmomatic-0.36/adapters/TruSeq3-PE.fa:2:30:10 \
+    LEADING:20 TRAILING:20 SLIDINGWINDOW:4:30 MINLEN:36
+}
+trim 1>trim.log 2>trim.err &

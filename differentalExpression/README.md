@@ -5,7 +5,6 @@
 ## Overview
 See methodsResults files
 
-## Module 4: Differential Expression Analysis
 
 ## Methods
 

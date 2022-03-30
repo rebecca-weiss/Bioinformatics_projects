@@ -8,4 +8,5 @@
 !*.gitignore
 !*.jpg
 !*.ris
-
+!*.html
+!*.fasta

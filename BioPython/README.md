@@ -1,4 +1,4 @@
-# BINF6309 Module 2: BioPython
+# BioPython
 
 ## Author: Rebecca Weiss 
 

@@ -1,0 +1,186 @@
+---
+title: "runPlink"
+author: Rebecca Weiss
+output:
+  md_document: 
+    variant: gfm
+---
+
+```{r}
+library(knitr)
+```
+
+```{bash}
+# Basic summary statistics
+plink --file hapmap1
+
+# Create binary PED file
+plink --file hapmap1 --make-bed --out hapmap1
+plink --file hapmap1 --make-bed --mind 0.05 --out highgeno
+
+# Specify binary file (bfile)
+plink --bfile hapmap1
+
+# Summary statistics of missing data (-missing)
+plink --bfile hapmap1 --missing --out miss_stat
+
+# Missing stats of chromosomes
+plink --bfile hapmap1 --chr 1 --out res1 --missing
+plink --bfile hapmap1 --chr 2 --out res2 --missing
+```
+
+First, the basic summary statistics were generated using plink. After creating the bind PED file, the summary statistics of the missing data were output to miss_stat. Statistical analyses were performed at the chromosomal level to analyze for missing data on chromosomes 1 and 2. The following two tables demonstrate the rates of missing data per SNP/locus and individual, respectively. 
+```{r}
+table1 <- read.table("miss_stat.lmiss", header = TRUE, sep = "\t")
+kable(head(table1))
+```
+
+```{r}
+table2 <- read.table("miss_stat.imiss", header = TRUE, sep = "\t")
+kable(head(table2))
+```
+
+
+```{bash}
+# Summary statistics of allele frequency
+plink --bfile hapmap1 --freq --out freq_stat
+plink --bfile hapmap1 --freq --within pop.phe --out freq_stat
+
+# Calculate for a specific SNP
+plink --bfile hapmap1 --snp rs1891905 --freq --within pop.phe --out snp1_frq_stat
+```
+
+Next, analyses were run on allelic frequencies. The output file freq_stat.frq contains the minor allele frequency and allelic codes at each SNP. Additionally, a stratified analysis was conducted based off of whether the individual is from the Chinese or Japan population and saved to output file, freq_stat.frq.strat. For a specific SNP calculation within populations, the --snp and specific SNP wanted is calculated, and saved to output file snp1_frq_stat.frq.strat. The table below illustrates the allelic frequency at each SNP, stratified by population.
+
+```{r}
+table3 <- read.table("freq_stat.frq.strat", header = TRUE, sep = "\t")
+kable(head(table3))
+```
+
+```{bash}
+# Basic association analysis for all single SNPs
+plink --bfile hapmap1 --assoc --out as1
+```
+
+An analysis of basic association on the given disease trait for all single SNPs is conducted, and output to as1.assoc. The table of the output is shown below, where each individual row is a single SNP association. The fields in the table include: chromosome, SNP identifier, code for allele 1, frequency of variant in cases, frequency of variant in controls, code for the other allele, chi-squared statistic (1 degree of freedom), asymptotic significance value, and odds ratio for this test. 
+
+```{r}
+table4 <- read.table("as1.assoc", header = TRUE, sep = "\t")
+kable(head(table4))
+```
+
+The table below is the same data, but the list of association statistics are sorted and the top ten are printed
+```{bash}
+sort --key=7 -nr as1.assoc | head
+```
+
+Calculcate association statistics for differences between Chinese and Japanese individuals
+```{bash}
+plink --bfile hapmap1 --pheno pop.phe --assoc --adjust --out as3
+```
+
+
+```{bash}
+plink --bfile hapmap1 --assoc --adjust --out as2
+```
+Analysis of the sorted list of association results that includes a spectrum of significance values adjusted for multiple testing is run and saved to the output as2.assoc.adjust. The table below shows the most significant assoications in the output file. The fields in the table include: chromosome, SNP identifier; unadjusted asymptotic, genomic control, Bonferroni-adjusted, Holm step-down adjusted, Sidak single-step adjusted, Sidak step-down adjusted significance values; Benjamini and Hochberg step-up and Benjamini and Yekutieli step-up FDR controls. 
+
+```{r}
+table5 <- read.table("as2.assoc.adjusted", header = TRUE, sep = "\t")
+kable(head(table5))
+```
+
+
+```{bash}
+plink --bfile hapmap1 --model --snp rs2222162 --out mod1
+plink --bfile hapmap1 --model --cell 0 --snp rs2222162 --out mod2
+```
+
+Association statistics can also be generated on a specific SNP. The output file is  mod1.model, and contains more than one row per SNP to represent the variety of tests performed for each one. To account for the lack of 5 observation values required by the 2 x 3 genotypic model originally calculated, the --cell 0 option is added to set the minimum in each cell to equal 0 and saved as mod2.model. The results of genotypic tests on SNP rs2222162 are in the table below.
+
+```{r}
+mod2 <- read.table("mod2.model", header = TRUE, sep = "\t")
+kable(head(mod2))
+```
+
+
+```{bash}
+plink --bfile hapmap1 --cluster --mc 2 --ppc 0.05 --out str1
+```
+
+Stratification analysis can be used to eaccount for the two distinct subpopulations in our sample, Chinese and Japanese. Whole genome data clustering can be used to cluster the individuals into homogeneous groups, and is performed using IBS clustering. The results are in the output file, str1.cluster1, and shown in the table below. 
+
+```{r}
+table6 <- read.table("str1.cluster1", header = TRUE, sep = "\t")
+kable(head(table6))
+```
+
+```{bash}
+plink --bfile hapmap1 --mh --within str1.cluster2 --adjust --out aac1
+```
+
+Asssociation analyses that account for clustering can now be run, using str1.cluster2, which contains the same data as str1.cluster1 but in a cluster variable format file. Cochran-Mantel-Haenszel (CMH) association statistic, which tests for SNP-disease association conditional on the clustering supplied by the cluster file, is run and a sorted list of association results is generated in output file aac1.cmh.adjusted. The results are shown in the table below. 
+
+```{r}
+table7 <- read.table("aac1.cmh.adjusted", header = TRUE, sep = "\t")
+kable(head(table7))
+```
+
+
+```{bash}
+plink --bfile hapmap1 --cluster --cc --ppc 0.01 --out version2
+plink --bfile hapmap1 --mh --within version2.cluster2 --adjust --out aac2
+plink --bfile hapmap1 --cluster --K 2 --out version3
+plink --bfile hapmap1 --mh --within pop.phe --adjust --out aac3
+```
+
+Asssociation analyses can then be repeated to show the genome-wide significance of the disease SNP. This is just to demonstrate the log file records of clusters found, as shown in the table below from the output, aac1.cmh.adjusted.
+
+```{r}
+table8 <- read.table("aac2.cmh.adjusted", header = TRUE, sep = "\t")
+kable(head(table8))
+```
+
+
+```{bash}
+plink --bfile hapmap1 --cluster --matrix --out ibd_view
+```
+
+To visualize the substructure in the sample, a matrix of pairwaise distance is generated, as ibd_view.mdist. The scaling plot is then generated in R and shown below. 
+
+```{r, echo=FALSE}
+m <- as.matrix(read.table("ibd_view.mibs"))
+mds <- cmdscale(as.dist(1-m))
+k <- c( rep("green",45) , rep("blue",44) )
+plot(mds,pch=20,col=k)
+```
+
+
+```{bash}
+plink --bfile hapmap1 --assoc --pheno qt.phe --out quant1
+plink --bfile hapmap1 --assoc --pheno qt.phe --perm --within str1.cluster2 --out quant2
+```
+
+Quantitative trait association analyses can now be performed, where it the quantitative trait status is identified (or not), and the relevant analysis is conducted. In the case of a quantitative trait, ordinary least squares regression is run. The quantitative trait is flagged to PLINK, and the quant1.qassoc output file is generated. The sorted empirical p-value (EMP1) and permutation testing analyses are run, which generates the output file quant2.qassoc.perm (shown in the table below). 
+
+```{r}
+table9 <- read.table("quant2.qassoc.perm", header = TRUE, sep = "\t")
+kable(head(table9))
+```
+
+```{bash}
+plink --bfile hapmap1 --assoc --pheno qt.phe --mperm 1000 --within str1.cluster2 --out quant3
+plink --bfile hapmap1 --pheno qt.phe --gxe --covar pop.phe --snp rs2222162 --out quant3
+```
+
+```{bash}
+plink --bfile hapmap1 --snp rs2222162 --recode AD --out rec_snp1
+```
+
+SNP sets, or SNPs of interest, can be extracted and analyzed as a more concise data file. To demonstrate, SNP rs2222162 is extracted where the genotypic recoding is saved to an output file, rec_snp1.recode.raw. Logistical regression in R is run, and shown below.
+
+```{r}
+d <- read.table("rec_snp1.raw" , header=T)
+summary(glm(PHENOTYPE-1 ~ rs2222162_1, data=d, family="binomial"))
+```
+

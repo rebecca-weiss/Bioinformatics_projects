@@ -1,0 +1,18 @@
+---
+author: Rebecca Weiss
+output:
+  md_document: 
+    variant: gfm
+bibliography: bibliography.ris
+nocite: '@*'
+---
+
+## Methods: Variant Calling
+
+Variant calling is used to identify genetic differences between individuals of the same species (germline), or of tissues from the same individual (somatic).  The overall workflow for conducting variant calling is to 1. conduct alignment with a reference genome, and 2. analyze the alignment using a variant calling program such as GATK (McKenna et. al) or DeepVariant (Poplin et. al). In this module, we run DeepVariant protocol outlined in the Poplin et. al 2018 paper. 
+
+After the initial steps of getting the genome (GRCh38), indexing it, trimming using Trimmomatic (Bolger et. al), and indexing the reads into an alignment file, we are ready to begin the alignment. The next step of this variant calling pipeline, the alignment, was done using Burrows Wheeler aligner (BWA) (Li et. al). BWA consists of 3 algorithmic methods: backtrack, SW, and MEM. In this module, we used BWA-MEM to align the reads which we can then sort and create the bam file.  Following the alignment, the reads can then be indexed and DeepVariant (Poplin et. al) is run to create the vcf file. 
+
+
+
+## References 

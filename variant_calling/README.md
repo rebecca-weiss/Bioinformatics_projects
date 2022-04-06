@@ -1,4 +1,4 @@
-# BINF6309 Module 5: Variant Calling
+#  Variant Calling
 
 ## Author: Rebecca Weiss
 

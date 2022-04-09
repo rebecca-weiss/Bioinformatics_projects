@@ -1,4 +1,3 @@
-BINF 6200: Assignment 4
 
 Author: Rebecca Weiss
 

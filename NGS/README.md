@@ -1,4 +1,4 @@
-# BINF6308 Module 10: Genome Assembly
+# Genome Assembly
 
 ## Rebecca Weiss
 

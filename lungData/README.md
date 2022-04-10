@@ -1,4 +1,4 @@
-# BINF6309 Module 9: Metagenomics
+# Metagenomics
 
 ## Author: Rebecca Weiss
 

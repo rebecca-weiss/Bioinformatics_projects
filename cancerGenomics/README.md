@@ -1,5 +1,5 @@
 ## 
-# BINF6309 Module 11: Cancer Genomics
+# Module 11: Cancer Genomics
 
 ## Author: Rebecca Weiss
 

@@ -11,7 +11,9 @@ All output from the QUAST analysis [4] can be found in module10-rebecca-weiss/Ge
 
 ## Future Directions
 Looking at the GFF file we calculated with QUAST (GenomeAssembly/quast_output/predicted_genes/scaffolds_genemark_genes.gff), future directions for work arise:
+
 -Associating functions to these proteins, using GO terms. From the NCBI page [5], we know that Rhodobacter sphaeroides is used in metabolic processes, specifically in photosynthesis and chemotaxis, and can be used in aerobic and anaerobic conditions; thus, terms related to the these processes, as seen in module 9 can be used, such as ko00195 Photosynthesis, or ko02030	Bacterial chemotaxis, as examples 
+
 -Parsing of the GFF file to obtain the FASTA file, via Python parsing
 
 
